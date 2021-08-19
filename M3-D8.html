@@ -82,25 +82,18 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="backoffice.html">Backoffice</a>
-            </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="detail.html">Details</a>
-            </li> -->
-          </ul>
         </div>
       </nav>
 
-    <div class="container form-container">
+      <h5 class="m-2">All your product </h5>
+      <div class="d-flex justify-content-center">
+          <div class="spinner-grow" id="loader" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+      </div>
+
+    <div class="container-fluid" id="allProduct">
         <div class="row">
-            <div class="col-12">
-                <h5>All your product </h5>
-                <div class="container" id="allProduct">
-                    <div class="row">
-                        
-                    </div>
-                </div>
-        
-            </div>
         </div>
     </div>
     <!-- bootstrap JS -->
@@ -108,6 +101,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <!-- own JS -->
     <script>
+        //loader
+        const isLoading = (loading) => {
+            if(loading){
+                document.getElementById("loader").classList.remove("d-none")
+            }else{
+                document.getElementById("loader").classList.add("d-none")
+            }
+        }
+
+
         const getAllProduct = async () => {
             const url = "https://striveschool-api.herokuapp.com/api/product/"
             try {
@@ -130,11 +133,19 @@
 
 
         window.onload = async () =>{
+
+            try {
+            isLoading(true)
             const allProducts = await getAllProduct()
 
             displayProduct(allProducts)
+            } catch (error) {
+                console.log(error)
+            }finally{
+                isLoading(false)
+            }
 
-
+        
         }
 
         const displayProduct = (products) => {
@@ -148,7 +159,7 @@
                 // li.classList.add("list-group-item")
                 // li.innerHTML = `<span>${product.name}</span><span>${product.price}`
                 displayProductContainer.innerHTML += 
-                `<div class="card col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+                `<div class="card col col-sm-6 col-md-4 col-lg-3 m-2">
                     <img class="card-img-top" src="${product.imageUrl}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
