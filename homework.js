@@ -1,3 +1,5 @@
+// this js is working for backoffice.html only
+
 let results = []
 
 const getProduct = async (url) => {
@@ -21,22 +23,14 @@ window.onload = () => {
     const url = "https://striveschool-api.herokuapp.com/api/product/"
     getProduct (url) 
     
-    // displayProduct(product)
+    const prodcutId = new URLSearchParams(location.search).get("id")
+    if (prodcutId){
+        document.querySelector(".product-state").innerHTML = "Edit your Product"
+    } else{
+        document.querySelector(".product-state").innerHTML = "Create your Product"
+    }
 }
 
-// <!-- The product model is 
-// {
-//     "_id": "5d318e1a8541744830bef139", //SERVER GENERATED
-//     "name": "app test 1",  //REQUIRED
-//     "description": "somthing longer", //REQUIRED
-//     "brand": "nokia", //REQUIRED
-//     "imageUrl": "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80", //REQUIRED
-//     "price": 100, //REQUIRED
-//     "userId": "admin", //SERVER GENERATED
-//     "createdAt": "2019-07-19T09:32:10.535Z", //SERVER GENERATED
-//     "updatedAt": "2019-07-19T09:32:10.535Z", //SERVER GENERATED
-//     "__v": 0 //SERVER GENERATED
-// } -->
 
 const handleSubmit = async (event) => {
     event.preventDefault() //prevent browser from refreshing | browser's default behavior

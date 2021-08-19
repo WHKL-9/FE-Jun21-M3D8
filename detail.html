@@ -78,13 +78,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="M3-D8.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="M3-D8.html">Home </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="backoffice.html">Backoffice</a>
             </li>
             <!-- <li class="nav-item">
-                <a class="nav-link" href="detail.html">Details</a>
+                <a class="nav-link" href="detail.html">Details<span class="sr-only">(current)</span></a>
             </li> -->
           </ul>
         </div>
@@ -93,11 +93,11 @@
     <div class="container form-container">
         <div class="row">
             <div class="col-12">
-                <h5>All your product </h5>
-                <div class="container" id="allProduct">
-                    <div class="row">
-                        
-                    </div>
+                <h5>Product Details</h5>
+                <div class="container text-center" id="allProductDetails">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
                 </div>
         
             </div>
@@ -108,62 +108,58 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <!-- own JS -->
     <script>
-        const getAllProduct = async () => {
-            const url = "https://striveschool-api.herokuapp.com/api/product/"
+        const productId = new URLSearchParams(window.location.search).get("id")
+        // console.log(productId)
+        window.onload = async () => {
+
+            //target product details container
             try {
-                const response = await fetch (url, {
+
+                const url = " https://striveschool-api.herokuapp.com/api/product/"
+
+                const response = await fetch(url + productId,{
                     method: "GET",
                     headers: {
                     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjE4YzJkNTI2MjAwMTViNmRjOTIiLCJpYXQiOjE2MjkyODY3OTYsImV4cCI6MTYzMDQ5NjM5Nn0.yAhu_c4q0lOI03taC9l2-tRr-g2fSMHLx3aDjJPmgoA"
                     }
                 })
 
-                const allProducts = await response.json()
+                if(response.ok){
+                    const productData = await response.json()
 
-                return allProducts
-            } catch (error) {
-                console.log(error)
-            }finally{
-                console.log("All available Products successfully loaded")
-            }
-        }
-
-
-        window.onload = async () =>{
-            const allProducts = await getAllProduct()
-
-            displayProduct(allProducts)
-
-
-        }
-
-        const displayProduct = (products) => {
-        //DOM Manipulation
-            //target display product container
-            let displayProductContainer = document.querySelector("#allProduct .row")
-            
-            products.forEach(product =>{
-                // const li = document.createElement("li")
-
-                // li.classList.add("list-group-item")
-                // li.innerHTML = `<span>${product.name}</span><span>${product.price}`
-                displayProductContainer.innerHTML += 
-                `<div class="card col-12 col-sm-6 col-md-4 col-lg-3 m-2">
-                    <img class="card-img-top" src="${product.imageUrl}" alt="Card image cap">
+                const productDetailsContainer = document.getElementById("allProductDetails")
+                productDetailsContainer.innerHTML = 
+                `<div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">${product.name}</h5>
-                        <h6 class="card-text">Brand: ${product.brand}</h6>
-                        <p class="card-text">Description: ${product.description}</p>
-                        <p class="card-text">Price: ${product.price}</p>
-                        <a href="./detail.html?id=${product._id}">Product Details</a>
+                        <h5 class="card-title">${productData.name}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">ID: ${productData._id}</h6>
+                        <p class="card-text">Created at: ${new Date(productData.createdAt).toLocaleDateString()}</p>                    
+                        <p class="card-text">Updated at: ${new Date(productData.updatedAt).toLocaleDateString()}</p>
+                        <a href="M3-D8.html" class="card-link">Back to All Products</a>
                     </div>
-                </div>`
+                </div>
                 
-            })
-        
+                <a href="./backoffice.html?id=${productData._id} class="mt-3">
+                <button type="button" class="btn btn-warning mt-3">
+                    Edit Product
+                </button>
+                </a>
+                `
+
+                                
+             } 
+            }
+            catch (error) {
+                console.log(error)
+            }
 
         }
+
+
+
+
     </script>
 </body>
+
 
 </html>
