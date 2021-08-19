@@ -74,5 +74,7 @@ const handleSubmit = async (event) => {
     }
 }
 
-
+// const resetForm = () => {
+//     document.getElementById("#productForm").reset()
+// }
 

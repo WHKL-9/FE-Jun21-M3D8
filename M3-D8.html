@@ -71,7 +71,7 @@
 
     <div class="container form-container">
         <div class="row">
-            <div class="col-8">
+            <div class="col-12">
                 <h5>All your product </h5>
                 <div class="container" id="allProduct">
                     <div class="row">
@@ -127,14 +127,14 @@
                 // li.classList.add("list-group-item")
                 // li.innerHTML = `<span>${product.name}</span><span>${product.price}`
                 displayProductContainer.innerHTML += 
-                `<div class="card col-12 col-sm-6 col-md-4 col-lg-2">
-                <img class="card-img-top" src="${product.imageUrl}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">${product.name}</h5>
-                    <h6 class="card-text">Brand: ${product.brand}</h6>
-                    <p class="card-text">Price: ${product.description}</p>
-                    <p class="card-text">Price: ${product.price}</p>
-                </div>
+                `<div class="card col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+                    <img class="card-img-top" src="${product.imageUrl}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <h6 class="card-text">Brand: ${product.brand}</h6>
+                        <p class="card-text">Description: ${product.description}</p>
+                        <p class="card-text">Price: ${product.price}</p>
+                    </div>
                 </div>`
                 
             })

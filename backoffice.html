@@ -74,7 +74,7 @@
             <div class="col-8">
                 <h5>Upload your product </h5>
 
-                <form onsubmit="handleSubmit(event)">
+                <form id="productForm"onsubmit="handleSubmit(event)">
                     <div class="form-group">
                       <label for="pruductName">Name</label>
                       <input type="text" class="form-control" id="productName" required>
@@ -100,6 +100,9 @@
                     <!-- button inside a form with trigger the onsubmit, even without specifying onclick on the button  -->
                     <!-- by default it is on submit -->
                   </form>
+
+                  <!-- <button type="button" class="btn btn-warning" onclick="resetForm()">Reset</button> -->
+
 
                   <!-- The product model is 
             {
